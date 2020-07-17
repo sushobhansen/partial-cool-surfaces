@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      binary;
+    class       volScalarField;
+    location    "0";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 308.15;
+Tcontrol		uniform 315;
+Treflective		uniform 308.6;
+Tair			uniform 308.15;
+
+boundaryField
+{
+    "(NE.*|SE.*)"
+    {
+        type            fixedValue;
+        value           $Tcontrol;
+    }
+	
+	"(SW.*|NW.*)"
+	{
+		type	fixedValue;
+		value	$Treflective;
+	}
+    outer
+    {
+        type            fixedValue;
+        value           $Tair;
+    }
+    south
+    {
+        type            zeroGradient;
+	}
+    west
+    {
+        type            fixedValue;
+        value           $Tair;
+    }
+    east
+    {
+        type            zeroGradient;
+    }
+    north
+    {
+        type            zeroGradient;
+    }
+    atmosphere
+    {
+        type            symmetry;
+    }
+}
+
+
+// ************************************************************************* //

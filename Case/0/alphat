@@ -1,0 +1,64 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      binary;
+    class       volScalarField;
+    location    "0";
+    object      alphat;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -1 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    "(SW.*|NW.*|NE.*|SE.*)"
+    {
+        type            alphatJayatillekeWallFunction;
+		Prt				0.85;
+        value           uniform 0;
+    }
+    outer
+    {
+        type            alphatJayatillekeWallFunction;
+		Prt				0.85;
+        value           uniform 0;
+    }
+    south
+    {
+        type            calculated;
+		value		uniform 0;
+	}
+    west
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    east
+    {
+        type            calculated;
+		value			uniform 0;
+    }
+    north
+    {
+        type            calculated;
+		value			uniform 0;
+    }
+    atmosphere
+    {
+        type            symmetry;
+    }
+	
+}
+
+
+// ************************************************************************* //

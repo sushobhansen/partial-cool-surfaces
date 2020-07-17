@@ -1,0 +1,13 @@
+#!/bin/bash
+
+rm -r proc* postP*
+rm log
+rm -r *00
+decomposePar
+mpirun -np 8 renumberMesh -parallel -overwrite
+mpirun -np 8 customBBsqSimpleFoam -parallel | tee log
+reconstructPar -latestTime
+postProcess -func "components(U)" -latestTime
+postProcess -func singleGraph -latestTime
+customBBsqSimpleFoam -postProcess -func "yPlus" -latestTime
+customBBsqSimpleFoam -postProcess -func surfaces -latestTime
