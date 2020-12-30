@@ -1,0 +1,44 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      changeDictionaryDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+boundary
+{
+    "(SW.*|NW.*|NE.*|SE.*)"
+    {
+        type            wall;
+		physicalType    wall;
+    }
+	
+	outer
+    {
+        type            wall;
+		physicalType    wall;
+    }
+	
+	"(north|east|south|west)"
+	{
+		type            patch;
+        physicalType    patch;
+	}
+	
+	atmosphere
+	{
+		type            symmetry;
+        physicalType    symmetry;
+	}
+}
+
+// ************************************************************************* //

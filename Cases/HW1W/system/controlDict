@@ -1,0 +1,86 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.1                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     buoyantBousinessqSimpleFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         2000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   2000;
+
+purgeWrite      0;
+
+writeFormat     binary;
+
+writePrecision  6;
+
+writeCompression uncompressed;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions
+{
+	forceCoeffs1
+	{
+	    type            forceCoeffs;
+
+	    libs            ("libforces.so");
+
+	    writeControl    timeStep;
+	    timeInterval    1;
+
+	    log             yes;
+
+	    patches         (SWroofs NWroofs SEroofs SWwalls NWwalls SEwalls);
+	    
+	    origin	(0 0 0);
+	    coordinateRotation
+		{
+		type EulerRotation; 
+		degrees true;
+		rotation (0 0 0);
+		}
+		
+	rho	rhoInf;
+	rhoInf	1.0;
+	CoR	(0 0 0);
+	dragDir	(1 0 0);
+	liftDir	(0 1 0);
+	pitchAxis	(0 0 1);
+	
+	magUInf	1.0;
+	lRef	1.0;
+	Aref	1.0;
+	}
+
+}
+
+libs ("libatmosphericModels.so");
+
+// ************************************************************************* //

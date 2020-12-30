@@ -1,0 +1,63 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5.x                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      binary;
+    class       volScalarField;
+    location    "0";
+    object      epsilon;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -3 0 0 0 0];
+
+epsilonInlet	3.14e-4;
+
+internalField   uniform $epsilonInlet;
+
+boundaryField
+{
+    "(SW.*|NW.*|NE.*|SE.*)"
+    {
+        type            epsilonWallFunction;
+        value           uniform $epsilonInlet;
+    }
+    outer
+    {
+        type            epsilonWallFunction;
+        value           uniform $epsilonInlet;
+    }
+    south
+    {
+        type            zeroGradient;
+	}
+    west
+    {
+        type           	turbulentMixingLengthDissipationRateInlet;
+		mixingLength	3.58;
+        value           uniform $epsilonInlet;
+    }
+    east
+    {
+        type            zeroGradient;
+    }
+    north
+    {
+        type            zeroGradient;
+    }
+    atmosphere
+    {
+        type            symmetry;
+    }
+    
+    #includeEtc "caseDicts/setConstraintTypes"
+}
+
+
+// ************************************************************************* //
